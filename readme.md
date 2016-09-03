@@ -13,9 +13,8 @@ Le plugin sauvegarde les dossiers sélectionnés sur votre serveur selon la fré
 Historique
 =========
 
-
-Francois POTEAU - contact: https://github.com/frapfrap
 Version 1.4 - 03/09/2016
+Francois POTEAU - contact: https://github.com/frapfrap
 
 Mise à jour de comptabilité avec Pluxml 5.5
 - Bug: Correction bug lien image de suppression des archives lorsque Pluxml est utilisé dans un sous-dossier
