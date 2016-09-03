@@ -6,12 +6,12 @@
     *   que ce script est, à l'origine, fait par des développeurs bénévoles : en conséquence, veillez à 
     *   laisser le Copyright, par respect de ceux qui ont consacré du temps à la création du script. 
     *
-    *   @author         François Poteau <fpoteau@gmail.com>
+    *   @author         François Poteau 
 	* 	@copyright		2010-2011 François Poteau
-    *   @link           http://francoispoteau.com
+    *   @link           https://github.com/frapfrap
     *   @license        http://www.gnu.org/licenses/gpl.html (COPYING) GNU Public License
     *   @begin          24/02/2011, François Poteau
-    *   @last           07/09/2011, Cyril MAGUIRE
+    *   @last           03/09/2016, François Poteau
 */
 
 require_once(dirname(__FILE__).'/../../../core/admin/prepend.php');
@@ -172,6 +172,7 @@ class archive {
 	//
 	// @author	François POTEAU
 	// @author	Cyril MAGUIRE
+	// @update 03/09/2016 : sorting name, fixed bug display delete icon
 	// @return void
 	public function displaylist() {
 		global $plxShow;
@@ -179,12 +180,18 @@ class archive {
 		$dir = @opendir($dirname);
 		$i = 0;
 		if ($dir) {
+
+			$files = array();
+			while ($files[] = readdir($dir));
+			sort($files);
+			closedir($dir);
+
 			echo '<table>';
-			while($file = readdir($dir)) {
+			foreach ($files as $file) {
 				if($file != '.' && $file != '..' && !is_dir($dirname.$file) && substr($file, 0, 1) != '.')
 				{
 					
-					echo '<tr><td class="name"><a href="parametres_plugin.php?p=plxcontentbackup&f='.plxEncrypt::encryptId($file).'">'.$file.'</a></td><td>'.$this->format_bytes(filesize($dirname.$file)).'</td><td><a href="parametres_plugin.php?p=plxcontentbackup&d='.plxEncrypt::encryptId($file).'" onclick="return confirm(\'Êtes-vous sûr de vouloir supprimer l’'.$file.' ?\')"><img src="'.PLX_ROOT.PLX_PLUGINS.'plxcontentbackup/img/delete.gif" alt="Supprimer l\'archive" title="Supprimer l\'archive" /></a></td></tr>';
+					echo '<tr><td class="name"><a href="parametres_plugin.php?p=plxcontentbackup&f='.plxEncrypt::encryptId($file).'">'.$file.'</a></td><td>'.$this->format_bytes(filesize($dirname.$file)).'</td><td><a href="parametres_plugin.php?p=plxcontentbackup&d='.plxEncrypt::encryptId($file).'" onclick="return confirm(\'Êtes-vous sûr de vouloir supprimer l’'.$file.' ?\')"><img src="'.PLX_PLUGINS.'plxcontentbackup/img/delete.gif" alt="Supprimer l\'archive" title="Supprimer l\'archive" /></a></td></tr>';
 					$i++;
 				}
 			}
@@ -192,7 +199,6 @@ class archive {
 					echo '<tr><td><em>Aucune archive disponible.</em></td></tr>';
 			}
 			echo '</table>';
-			closedir($dir);
 		}
 	}
 	
@@ -211,8 +217,8 @@ class archive {
 	
 	
 	// *********************************************************************
-	// Méthode displaylist()
-	// affiche la liste des fichiers avec sa taille (sortie HTML)
+	// Méthode htaccess
+	// création d'un fichier htaccess pour la sécurité
 	//
 	// @author	François POTEAU
 	// @return void
