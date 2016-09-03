@@ -16,6 +16,10 @@ if(!$plxPlugin->getParam('days')) { $plxPlugin->setParam('days', '7', 'numeric')
 $archive = new archive($plxPlugin->getParam('savedir'),$plxPlugin->getParam('days'),$plxPlugin->getParam('saved_dirs'));
 $archive->check();
 if(!empty($_POST)) {
+
+	$plxPlugin->setParam('attach', 0, 'numeric');
+	$plxPlugin->setParam('attach', $_POST['attach'][0], 'numeric');
+
 	$plxPlugin->setParam('savedir', $_POST['savedir'], 'string');
 	$plxPlugin->setParam('days', $_POST['days'], 'numeric');
 	$plxPlugin->setParam('email', $_POST['email'], 'string');
@@ -35,21 +39,25 @@ if($_GET['action'] == 'zip') {
 		plxMsg::Info('L\'archive a été crée avec succès');
 }
 if($_GET['action'] == 'mail') {
-	if($archive->sendmail($plxPlugin->getParam('email'),$plxPlugin->getParam('senderemail'),$plxPlugin->getParam('sendername'),$plxPlugin->getLang('L_TITLE'),$plxPlugin->getLang('L_CONTENT'))) { 
+	if($archive->sendmail($plxPlugin->getParam('email'),$plxPlugin->getParam('senderemail'),$plxPlugin->getParam('sendername'),$plxPlugin->getLang('L_TITLE'),$plxPlugin->getLang('L_CONTENT'),$plxPlugin->getParam('attach'))) { 
 		plxMsg::Info('L\'email a été envoyé avec succès'); 
 	}
 }
 
 if(isset($_GET['f']) && file_exists($plxPlugin->getParam('savedir').plxEncrypt::decryptId($_GET['f'])))
 {
+	ob_clean();
+	//ob_end_flush();
 	ob_start();
 	header('Expires: 0');
 	header('Cache-Control: private');
 	header('Pragma: cache');
 	header('Content-Disposition: attachment; filename="'.plxEncrypt::decryptId($_GET['f']).'"');
-	header('Content-type: application/x-zip-compressed');
+	header('Content-type: application/zip');
+	header('Content-Length: '.filesize($plxPlugin->getParam('savedir').plxEncrypt::decryptId($_GET['f'])));
 	ob_end_clean();
 	readfile($plxPlugin->getParam('savedir').plxEncrypt::decryptId($_GET['f']));
+	exit;
 }
 
 if(isset($_GET['d']) && file_exists($plxPlugin->getParam('savedir').plxEncrypt::decryptId($_GET['d'])))
@@ -75,6 +83,7 @@ if(isset($_GET['d']) && file_exists($plxPlugin->getParam('savedir').plxEncrypt::
 	<h3><?php $plxPlugin->lang('L_OPTIONS_CONFIG') ?></h3>
 	<form action="parametres_plugin.php?p=plxContentBackup" method="post">
 		<fieldset>
+					<p><input type="checkbox" name="attach[]" value="1" <?php if($plxPlugin->getParam('attach') == 1)  { echo ' checked'; } ?> /><?php $plxPlugin->lang('L_ATTACH_CONFIG') ?></p>
 					<label><?php $plxPlugin->lang('L_SAVEDIR_CONFIG') ?></label> <input type="text" name="savedir" value="<?php echo plxUtils::strCheck($plxPlugin->getParam('savedir')) ?>" /><br />
 					<label><?php $plxPlugin->lang('L_DAY_CONFIG') ?></label> <input type="text" name="days" value="<?php echo plxUtils::strCheck($plxPlugin->getParam('days')) ?>" /><br />
 					<label><?php $plxPlugin->lang('L_EMAIL_CONFIG') ?></label> <input type="text" name="email" value="<?php echo plxUtils::strCheck($plxPlugin->getParam('email')) ?>" /><br />
@@ -92,6 +101,8 @@ if(isset($_GET['d']) && file_exists($plxPlugin->getParam('savedir').plxEncrypt::
 							PLX_CONFIG_PATH.'users.xml',
 							PLX_CONFIG_PATH.'plugins.xml',
 							PLX_CONFIG_PATH.'tags.xml',
+							$plxAdmin->aConf['racine_plugins'],
+							$plxAdmin->aConf['racine_themes'],
 						);
 						
 						foreach($data as $d) {

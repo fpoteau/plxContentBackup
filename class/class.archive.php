@@ -140,28 +140,42 @@ class archive {
 	// @param string $email :: e-mail du destinataire
 	// @param string $email_sender :: e-mail de l'expéditeur
 	// @param string $sender :: Nom de l'expéditeur
-	//
+	// @param bool :: true = archive en pièce jointe 
+
 	// @author François POTEAU
 	// @return bool
 	// *********************************************************************
 	
 	
-	public function sendmail($email,$email_sender='nobody@save.com',$sender='Sauvegarde',$titre='Sauvegarde site internet',$message='Vous trouverez ci-joint la dernière sauvegarde du contenu de votre site internet.') {
+	public function sendmail($email,$email_sender='nobody@save.com',$sender='Sauvegarde',$titre='Sauvegarde site internet',$message='Sauvegarde du site internet.',$attached=false) {
 		if($this->lastbackup) {
 			$mail = new PHPMailerLite(); // defaults to using php "Sendmail" (or Qmail, depending on availability)
 			$mail->IsMail(); // telling the class to use native PHP mail()
-			try {
-				  $mail->SetFrom($email_sender, $sender);
-				  $mail->CharSet = 'utf-8';
-				  $mail->AddAddress($email, $email);
-				  $mail->Subject = $titre.' '. $this->lastbackup;
-				  $mail->Body = $message; // Body text/plain
+			$mail->SetFrom($email_sender, $sender);
+		  	$mail->CharSet = 'utf-8';
+		 	$mail->AddAddress($email, $email);
+		  	$mail->Subject = $titre.' '. $this->lastbackup;
+			// si l'on souhaite joindre l'archive en pièce jointe du mail
+			if($attached) {
 
-				  $mail->AddAttachment($this->save_dir.'archive.'.$this->lastbackup.'.zip');      // attachment
-				  return $mail->Send();
-			} 
-			catch (phpmailerException $e) { return false; } 
-			catch (Exception $e) { return false; }
+				try {
+					  $mail->Body = $message; // Body text/plain
+					  $mail->AddAttachment($this->save_dir.'archive.'.$this->lastbackup.'.zip');      // attachment
+					  return $mail->Send();
+				} 
+				catch (phpmailerException $e) { return false; } 
+				catch (Exception $e) { return false; }
+			}
+			// sinon envoi d'un lien pour télécharger l'archive
+			else {
+				$url = 'http://'. $_SERVER[HTTP_HOST] . $_SERVER[SCRIPT_NAME] .'?p=plxContentBackup&f='.plxEncrypt::encryptId('archive.'.$this->lastbackup.'.zip');
+				try {
+					  $mail->Body = $message . ' '. $url; // Body text/plain
+					  return $mail->Send();
+				} 
+				catch (phpmailerException $e) { return false; } 
+				catch (Exception $e) { return false; }
+			}
 		}
 	}
 	
