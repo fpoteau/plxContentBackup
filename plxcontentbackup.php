@@ -2,8 +2,9 @@
 /**
  * Classe plxContentBackup
  *
- * @version 1.0
+ * @version 1.1
  * @date	23/02/2010
+ * @update 	03/09/2016 Pluxml 5.5
  * @author	François POTEAU
  **/
 class plxcontentbackup extends plxPlugin {
@@ -27,7 +28,7 @@ class plxcontentbackup extends plxPlugin {
 		# Ajouts des hooks
 		$this->addHook('AdminIndexTop', 'AdminIndexTop');
 		$this->addHook('AdminTopEndHead', 'AdminTopEndHead');
-		$this->addHook('AdminTopMenus', 'AdminTopMenus');
+		#$this->addHook('AdminTopMenus', 'AdminTopMenus');
 	}
 
 	/**
@@ -59,7 +60,6 @@ class plxcontentbackup extends plxPlugin {
 			);
 			echo '<p class="msg">'.$this->getLang('L_SUCCESS').' '.$this->getParam('email').'</p>';
 		}
-		
 	}
 	/**
 	 * Méthode pour le hook AdminTopEndHead
@@ -68,11 +68,11 @@ class plxcontentbackup extends plxPlugin {
 	 *
 	 * @return	void
 	 * @author	François POTEAU 
-	 **/
+	 
 	public function AdminTopEndHead() {
 		echo '<link rel="stylesheet" type="text/css" href="'.PLX_PLUGINS.'plxcontentbackup/styles.css" media="screen" />';
 	}
-	
+	**/
 
 }
 ?>

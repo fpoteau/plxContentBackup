@@ -75,36 +75,33 @@ if(isset($_GET['d']) && file_exists($plxPlugin->getParam('savedir').plxEncrypt::
 	<h3><?php $plxPlugin->lang('L_OPTIONS_CONFIG') ?></h3>
 	<form action="parametres_plugin.php?p=plxcontentbackup" method="post">
 		<fieldset>
-			<label><?php $plxPlugin->lang('L_SAVEDIR_CONFIG') ?></label> <input type="text" name="savedir" value="<?php echo plxUtils::strCheck($plxPlugin->getParam('savedir')) ?>" /><br />
-			<label><?php $plxPlugin->lang('L_DAY_CONFIG') ?></label> <input type="text" name="days" value="<?php echo plxUtils::strCheck($plxPlugin->getParam('days')) ?>" /><br />
-			<label><?php $plxPlugin->lang('L_EMAIL_CONFIG') ?></label> <input type="text" name="email" value="<?php echo plxUtils::strCheck($plxPlugin->getParam('email')) ?>" /><br />
-			<label><?php $plxPlugin->lang('L_EMAILSENDER_CONFIG') ?></label> <input type="text" name="senderemail" value="<?php echo plxUtils::strCheck($plxPlugin->getParam('senderemail')) ?>" /><br />
-			<label><?php $plxPlugin->lang('L_SENDERNAME_CONFIG') ?></label> <input type="text" name="sendername" value="<?php echo plxUtils::strCheck($plxPlugin->getParam('sendername')) ?>" /><br />
-			<div class="label"><?php $plxPlugin->lang('L_SAVED_DIRS') ?></div>
-			<div class="checkboxes">
-				<?php 
-				$data = array(
-					$plxAdmin->aConf['images'],
-					$plxAdmin->aConf['documents'],
-					$plxAdmin->aConf['racine_articles'],
-					$plxAdmin->aConf['racine_commentaires'],
-					$plxAdmin->aConf['racine_statiques'],
-					PLX_CONFIG_PATH.'parametres.xml',
-					PLX_CONFIG_PATH.'statiques.xml',
-					PLX_CONFIG_PATH.'users.xml',
-					PLX_CONFIG_PATH.'plugins.xml',
-					PLX_CONFIG_PATH.'tags.xml',
-				);
-				
-				foreach($data as $d) {
-					echo '<div><label>'. $d .'</label> <input class="checkbox"';
-					if(in_array($d,explode(',',$plxPlugin->getParam('saved_dirs')))) { echo 'checked="checked"'; }
-					echo' type="checkbox" value="'. $d .'" name="data[]" /></div>';
-				}
-				?>
-			</div>
-			<div class="clear"></div>
-			<input type="submit" name="submit" value="OK" />
+					<label><?php $plxPlugin->lang('L_SAVEDIR_CONFIG') ?></label> <input type="text" name="savedir" value="<?php echo plxUtils::strCheck($plxPlugin->getParam('savedir')) ?>" /><br />
+					<label><?php $plxPlugin->lang('L_DAY_CONFIG') ?></label> <input type="text" name="days" value="<?php echo plxUtils::strCheck($plxPlugin->getParam('days')) ?>" /><br />
+					<label><?php $plxPlugin->lang('L_EMAIL_CONFIG') ?></label> <input type="text" name="email" value="<?php echo plxUtils::strCheck($plxPlugin->getParam('email')) ?>" /><br />
+					<label><?php $plxPlugin->lang('L_EMAILSENDER_CONFIG') ?></label> <input type="text" name="senderemail" value="<?php echo plxUtils::strCheck($plxPlugin->getParam('senderemail')) ?>" /><br />
+					<label><?php $plxPlugin->lang('L_SENDERNAME_CONFIG') ?></label> <input type="text" name="sendername" value="<?php echo plxUtils::strCheck($plxPlugin->getParam('sendername')) ?>" /><br />
+					<label><?php $plxPlugin->lang('L_SAVED_DIRS') ?></label>
+						<?php 
+						$data = array(
+							$plxAdmin->aConf['medias'],
+							$plxAdmin->aConf['racine_articles'],
+							$plxAdmin->aConf['racine_commentaires'],
+							$plxAdmin->aConf['racine_statiques'],
+							PLX_CONFIG_PATH.'parametres.xml',
+							PLX_CONFIG_PATH.'statiques.xml',
+							PLX_CONFIG_PATH.'users.xml',
+							PLX_CONFIG_PATH.'plugins.xml',
+							PLX_CONFIG_PATH.'tags.xml',
+						);
+						
+						foreach($data as $d) {
+							echo '<br /><input';
+							if(in_array($d,explode(',',$plxPlugin->getParam('saved_dirs')))) { echo ' checked'; }
+							echo' type="checkbox" value="'. $d .'" name="data[]" />'. $d .'<br />';
+						}
+						?>
+					<div class="clear"></div>
+					<input type="submit" name="submit" value="OK" />
 		</fieldset>
 	</form>
 	<div class="clear"></div>
