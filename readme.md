@@ -3,7 +3,7 @@ Plugin de sauvegarde PluXML par l'envoi d'email
 Installation
 ============
 
-Télécharger le plugin, extraire, renommer le dossier en "plxcontentbackup" (attention pluxml est sensible à  la casse)
+Télécharger le plugin, extraire, renommer le dossier en "plxContentBackup" (attention pluxml est sensible à  la casse)
 
 
 Historique

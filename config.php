@@ -27,7 +27,7 @@ if(!empty($_POST)) {
 	$plxPlugin->setParam('saved_dirs', $dirs, 'string');
 	// écriture des paramètres
 	$plxPlugin->saveParams();
-	header('Location: parametres_plugin.php?p=plxcontentbackup');
+	header('Location: parametres_plugin.php?p=plxContentBackup');
 	exit;
 }
 if($_GET['action'] == 'zip') {
@@ -58,13 +58,13 @@ if(isset($_GET['d']) && file_exists($plxPlugin->getParam('savedir').plxEncrypt::
 	plxMsg::Info('Le fichier '.plxEncrypt::decryptId($_GET['d']).' a bien été supprimé'); 
 }
 ?>
-<div id="plxcontentbackupmail">
+<div id="plxContentBackupmail">
 	<h2><?php $plxPlugin->lang('L_TITLE_CONFIG') ?></h2>
 	<p><?php $plxPlugin->lang('L_DESCRIPTION_CONFIG') ?></p>
 	<h3><?php $plxPlugin->lang('L_ACTION_CONFIG') ?></h3>
 	<div class="options">
-		<a class="archive" href="parametres_plugin.php?p=plxcontentbackup&action=zip" title="<?php $plxPlugin->lang('L_ARCHIVE_CONFIG') ?>"><?php $plxPlugin->lang('L_ARCHIVE_CONFIG') ?></a>
-		<a class="email" href="parametres_plugin.php?p=plxcontentbackup&action=mail"title="<?php $plxPlugin->lang('L_MAIL_CONFIG') ?>"><?php $plxPlugin->lang('L_MAIL_CONFIG') ?></a>
+		<a class="archive" href="parametres_plugin.php?p=plxContentBackup&action=zip" title="<?php $plxPlugin->lang('L_ARCHIVE_CONFIG') ?>"><?php $plxPlugin->lang('L_ARCHIVE_CONFIG') ?></a>
+		<a class="email" href="parametres_plugin.php?p=plxContentBackup&action=mail"title="<?php $plxPlugin->lang('L_MAIL_CONFIG') ?>"><?php $plxPlugin->lang('L_MAIL_CONFIG') ?></a>
 		<div class="clear"></div>
 	</div>
 	<h3><?php $plxPlugin->lang('L_ARCHIVELIST_CONFIG') ?></h3>
@@ -73,7 +73,7 @@ if(isset($_GET['d']) && file_exists($plxPlugin->getParam('savedir').plxEncrypt::
 	</div>
 	<div class="clear"></div>
 	<h3><?php $plxPlugin->lang('L_OPTIONS_CONFIG') ?></h3>
-	<form action="parametres_plugin.php?p=plxcontentbackup" method="post">
+	<form action="parametres_plugin.php?p=plxContentBackup" method="post">
 		<fieldset>
 					<label><?php $plxPlugin->lang('L_SAVEDIR_CONFIG') ?></label> <input type="text" name="savedir" value="<?php echo plxUtils::strCheck($plxPlugin->getParam('savedir')) ?>" /><br />
 					<label><?php $plxPlugin->lang('L_DAY_CONFIG') ?></label> <input type="text" name="days" value="<?php echo plxUtils::strCheck($plxPlugin->getParam('days')) ?>" /><br />

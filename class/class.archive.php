@@ -191,7 +191,7 @@ class archive {
 				if($file != '.' && $file != '..' && !is_dir($dirname.$file) && substr($file, 0, 1) != '.')
 				{
 					
-					echo '<tr><td class="name"><a href="parametres_plugin.php?p=plxcontentbackup&f='.plxEncrypt::encryptId($file).'">'.$file.'</a></td><td>'.$this->format_bytes(filesize($dirname.$file)).'</td><td><a href="parametres_plugin.php?p=plxcontentbackup&d='.plxEncrypt::encryptId($file).'" onclick="return confirm(\'Êtes-vous sûr de vouloir supprimer l’'.$file.' ?\')"><img src="'.PLX_PLUGINS.'plxcontentbackup/img/delete.gif" alt="Supprimer l\'archive" title="Supprimer l\'archive" /></a></td></tr>';
+					echo '<tr><td class="name"><a href="parametres_plugin.php?p=plxcontentbackup&f='.plxEncrypt::encryptId($file).'">'.$file.'</a></td><td>'.$this->format_bytes(filesize($dirname.$file)).'</td><td><a href="parametres_plugin.php?p=plxcontentbackup&d='.plxEncrypt::encryptId($file).'" onclick="return confirm(\'Êtes-vous sûr de vouloir supprimer l’'.$file.' ?\')"><img src="'.PLX_PLUGINS.'plxContentBackup/img/delete.gif" alt="Supprimer l\'archive" title="Supprimer l\'archive" /></a></td></tr>';
 					$i++;
 				}
 			}

@@ -7,7 +7,7 @@
  * @update 	03/09/2016 Pluxml 5.5
  * @author	François POTEAU
  **/
-class plxcontentbackup extends plxPlugin {
+class plxContentBackup extends plxPlugin {
 	
 	
 	/**
@@ -70,7 +70,7 @@ class plxcontentbackup extends plxPlugin {
 	 * @author	François POTEAU 
 	 
 	public function AdminTopEndHead() {
-		echo '<link rel="stylesheet" type="text/css" href="'.PLX_PLUGINS.'plxcontentbackup/styles.css" media="screen" />';
+		echo '<link rel="stylesheet" type="text/css" href="'.PLX_PLUGINS.'plxContentBackup/styles.css" media="screen" />';
 	}
 	**/
 
